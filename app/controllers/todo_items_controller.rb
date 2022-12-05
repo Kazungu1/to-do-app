@@ -1,5 +1,7 @@
 class TodoItemsController < ApplicationController
+  before_action :authenticate_account!
   before_action :set_todo_item, only: %i[ show edit update destroy ]
+
 
   # GET /todo_items or /todo_items.json
   def index
