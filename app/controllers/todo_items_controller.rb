@@ -2,10 +2,10 @@ class TodoItemsController < ApplicationController
   before_action :authenticate_account!
   before_action :set_todo_item, only: %i[ show edit update destroy ]
 
-
   # GET /todo_items or /todo_items.json
   def index
-    @todo_items = TodoItem.all
+    # @todo_items = TodoItem.all
+    @todo_items = TodoItem.by_account(current_account)
   end
 
   # GET /todo_items/1 or /todo_items/1.json
@@ -62,13 +62,16 @@ class TodoItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_todo_item
-      @todo_item = TodoItem.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def todo_item_params
-      params.require(:todo_item).permit(:title)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_todo_item
+    @todo_item = TodoItem.
+      by_account(current_account)
+      .find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def todo_item_params
+    params.require(:todo_item).permit(:title)
+  end
 end
