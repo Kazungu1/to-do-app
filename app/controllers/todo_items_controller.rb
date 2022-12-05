@@ -25,6 +25,8 @@ class TodoItemsController < ApplicationController
   def create
     @todo_item = TodoItem.new(todo_item_params)
 
+    @todo_item.account = current_account
+
     respond_to do |format|
       if @todo_item.save
         format.html { redirect_to todo_item_url(@todo_item), notice: "Todo item was successfully created." }
